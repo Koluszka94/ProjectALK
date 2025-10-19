@@ -1,0 +1,501 @@
+PatientID,Age,Gender,BloodPressure,HeartRate,Symptoms
+001,69,F,114/102,57,
+002,78,F,120/98,107,Shortness of breath
+003,41,F,102/81,102,Shortness of breath
+004,19,F,129/97,51,Fever
+005,81,F,159/80,82,
+006,75,F,121/103,74,
+007,66,F,158/101,77,Fever
+008,77,M,179/74,96,None
+009,79,M,150/103,104,Headache
+010,81,F,102/96,100,
+011,24,M,120/68,88,
+012,35,M,103/84,109,
+013,31,M,108/85,102,Shortness of breath
+014,19,F,159/66,93,Headache;Shortness of breath;Fatigue
+015,25,F,146/94,63,Cough
+016,53,M,149/99,53,None
+017,19,M,105/101,53,Dizziness;Fever;Cough
+018,71,F,162/77,75,Fatigue;Cough
+019,61,F,133/69,85,
+020,31,M,147/74,57,Dizziness;Fatigue;Headache
+021,79,M,139/80,65,Headache;Fatigue
+022,70,F,123/85,74,Cough;Shortness of breath;None
+023,77,M,140/88,64,Fatigue;Cough
+024,62,F,164/84,56,None
+025,26,F,100/103,57,Fever;None
+026,80,F,110/76,57,Fever
+027,52,M,134/92,108,Cough;None
+028,22,M,140/87,56,Fever;None;Cough
+029,89,M,111/93,82,
+030,65,M,122/83,86,Headache;Shortness of breath;Cough
+031,61,F,134/60,84,
+032,64,F,177/62,50,
+033,22,F,113/98,76,Fever;Cough;Dizziness
+034,26,M,178/74,75,None
+035,59,M,176/91,88,Shortness of breath;Headache
+036,69,M,103/89,86,None
+037,40,F,114/102,78,Dizziness;Fatigue;Fever
+038,53,M,112/91,56,Fatigue;Dizziness;Fever
+039,76,F,127/61,91,Headache;Cough
+040,62,M,161/65,77,Cough;Dizziness;Fatigue
+041,45,M,143/79,79,Shortness of breath;Cough
+042,79,F,174/87,74,Dizziness;Fatigue;Cough
+043,79,F,100/86,106,Fatigue;Shortness of breath
+044,20,M,169/67,76,None;Fever;Fatigue
+045,26,F,161/96,82,Headache
+046,68,F,143/83,64,Dizziness
+047,76,M,131/91,73,Dizziness;Fatigue;Headache
+048,69,M,161/108,107,Shortness of breath;Cough;Headache
+049,69,F,111/98,51,None
+050,20,F,155/76,108,Dizziness;Cough;Fever
+051,19,M,101/87,103,None
+052,18,F,118/61,102,Fever;Shortness of breath;None
+053,61,M,131/65,81,None
+054,85,M,154/70,105,Fatigue;None;Dizziness
+055,34,F,137/83,54,None
+056,87,M,110/107,65,
+057,76,M,169/75,78,Cough
+058,20,M,119/95,68,
+059,84,M,118/79,81,None
+060,88,F,151/100,82,None
+061,57,M,138/77,89,None;Shortness of breath
+062,18,M,110/87,106,None
+063,67,F,122/90,79,
+064,59,F,106/75,75,
+065,77,F,101/60,97,Shortness of breath
+066,29,M,168/96,81,Fatigue;Dizziness;Shortness of breath
+067,26,M,118/107,65,None
+068,20,F,119/83,103,None
+069,50,M,123/70,98,Headache;None;Fever
+070,89,F,135/97,89,Fatigue
+071,42,F,117/105,67,None
+072,83,F,153/94,65,None;Fatigue;Fever
+073,78,M,140/95,82,Cough;Shortness of breath;None
+074,85,M,132/73,70,None
+075,65,M,119/67,56,
+076,84,F,116/92,97,Shortness of breath;Dizziness;Fever
+077,76,M,121/105,79,
+078,55,F,150/67,76,Fever;Headache;Shortness of breath
+079,44,F,120/89,82,Fatigue;Shortness of breath
+080,45,F,163/92,54,None
+081,78,F,147/78,53,None
+082,52,M,163/108,66,Headache;None
+083,61,M,129/88,95,Cough;Headache
+084,23,F,136/83,78,Cough;None
+085,63,F,152/90,84,
+086,77,F,162/80,81,Cough
+087,50,M,166/77,74,Fatigue;Shortness of breath;None
+088,71,F,157/62,89,None;Fever;Headache
+089,63,M,123/109,81,
+090,64,M,122/61,76,Headache
+091,19,M,116/99,82,None;Cough
+092,26,F,142/107,88,Fatigue;Fever
+093,59,M,125/94,99,
+094,42,M,123/72,109,
+095,24,M,156/95,94,None
+096,37,F,164/67,95,Fatigue;Shortness of breath;Fever
+097,33,F,113/71,100,
+098,32,M,165/91,72,Fatigue
+099,80,M,150/84,107,None
+100,80,M,161/81,107,None
+101,75,M,148/101,55,
+102,32,F,153/102,109,Fever
+103,25,M,152/103,93,Cough
+104,22,F,167/65,94,None
+105,64,F,154/99,101,
+106,33,F,112/109,109,
+107,47,F,118/76,105,Fatigue
+108,80,M,118/87,107,Cough;Fever;Headache
+109,72,M,161/82,58,Dizziness
+110,29,F,100/60,96,Cough
+111,51,F,147/84,89,
+112,18,F,115/98,54,Cough;Headache;None
+113,39,M,166/71,75,
+114,33,M,150/96,71,Fatigue;Headache;Fever
+115,74,M,128/73,77,
+116,86,M,146/108,79,Headache
+117,79,F,168/71,65,Headache
+118,65,M,138/95,82,Fatigue
+119,40,M,109/64,85,Fatigue;None
+120,51,F,151/90,59,Dizziness
+121,36,F,157/91,50,Dizziness;Fatigue;Headache
+122,86,F,103/75,73,
+123,19,F,131/86,69,Shortness of breath;Headache
+124,41,M,111/109,84,Headache
+125,50,M,132/102,86,Headache;Fatigue
+126,29,F,166/60,82,Shortness of breath;Dizziness
+127,57,F,173/102,93,Fever
+128,46,M,112/71,80,Fever;Cough
+129,63,F,101/109,84,Fatigue;Shortness of breath
+130,25,M,125/69,75,None
+131,51,M,106/63,107,Cough
+132,46,F,135/84,70,None
+133,53,F,109/96,58,Fatigue
+134,41,M,163/94,98,Cough;Fatigue;None
+135,53,M,123/82,81,Fatigue;Headache
+136,54,F,111/108,104,None
+137,30,M,122/84,84,
+138,47,F,116/108,69,
+139,30,M,158/78,98,None
+140,29,M,160/100,68,None
+141,26,F,170/87,63,Fever;Shortness of breath
+142,69,F,115/64,84,
+143,29,M,124/80,85,Headache;Shortness of breath;Dizziness
+144,70,M,122/75,106,None
+145,56,F,152/101,107,Shortness of breath;Fatigue
+146,56,M,113/90,107,Shortness of breath;Fatigue;Fever
+147,22,M,134/82,78,
+148,35,F,175/68,59,
+149,75,F,116/97,56,None
+150,63,F,112/99,91,None
+151,26,F,149/86,107,Headache;None
+152,83,F,104/88,86,Headache;Cough
+153,55,M,107/107,94,
+154,82,F,116/66,74,Shortness of breath;Fever
+155,62,M,103/95,55,Cough;Fatigue;Shortness of breath
+156,48,F,118/103,103,None
+157,56,F,173/85,68,
+158,56,F,166/104,62,None
+159,75,F,119/87,57,Shortness of breath
+160,78,M,138/60,52,None
+161,79,M,162/108,74,Headache;Fatigue
+162,73,M,132/97,102,Cough;Shortness of breath
+163,23,F,157/103,94,None
+164,49,F,144/106,70,Cough;Shortness of breath;Dizziness
+165,53,F,118/79,106,
+166,35,F,146/100,98,Fatigue;Shortness of breath
+167,31,M,114/90,50,Dizziness;Cough;Fatigue
+168,71,M,102/75,72,None
+169,74,M,174/71,59,
+170,33,F,171/97,61,
+171,41,F,127/67,107,Fatigue
+172,53,F,107/109,77,Fever;Headache;Fatigue
+173,58,M,163/86,103,Cough;Fatigue
+174,80,F,116/68,82,Dizziness;None;Shortness of breath
+175,46,M,112/105,84,
+176,23,F,168/106,74,Cough;Fever
+177,83,F,109/89,99,Fever;Headache
+178,22,M,132/60,67,None
+179,66,M,110/80,75,
+180,80,M,158/86,98,None
+181,50,M,100/80,97,
+182,72,M,105/87,66,
+183,86,M,104/97,52,Fever
+184,70,F,122/96,102,Fever;Fatigue;Headache
+185,54,F,173/69,68,
+186,34,F,177/68,95,None
+187,18,F,150/104,62,Shortness of breath;Fatigue
+188,21,F,161/60,98,
+189,49,F,133/87,80,Cough;Headache;Shortness of breath
+190,89,M,138/85,107,None
+191,51,M,153/62,108,Fatigue;None;Shortness of breath
+192,67,F,111/60,103,Headache;None
+193,22,F,156/76,97,
+194,64,M,122/74,86,Fatigue;None;Fever
+195,31,F,165/70,100,
+196,55,M,163/93,87,Cough;Dizziness
+197,67,F,129/74,76,Shortness of breath;Headache
+198,68,F,162/93,101,Fever;None
+199,55,M,178/89,104,Shortness of breath;Headache
+200,68,M,104/88,53,None
+201,27,F,155/76,59,Shortness of breath;Dizziness;Cough
+202,34,M,168/93,55,None;Dizziness
+203,70,M,165/72,92,
+204,60,M,174/106,106,Fatigue;Headache;Fever
+205,40,M,154/75,80,Fatigue;Cough
+206,33,F,107/63,89,None
+207,21,F,155/84,52,Shortness of breath;Dizziness
+208,84,F,126/88,81,None
+209,67,F,160/78,70,Fever
+210,22,M,141/81,70,None;Fatigue;Cough
+211,87,M,100/64,90,
+212,29,F,145/93,98,
+213,62,F,126/68,75,None;Fatigue
+214,64,M,155/89,92,None
+215,80,M,147/76,75,
+216,53,M,100/67,98,
+217,69,F,178/106,105,None
+218,31,F,127/82,63,Fever
+219,19,F,125/73,108,
+220,73,M,106/62,96,Dizziness;Headache
+221,40,F,117/97,84,None
+222,32,M,163/84,104,Shortness of breath;Cough
+223,45,M,173/98,106,Shortness of breath;Fever
+224,34,M,143/84,66,None
+225,30,F,124/63,59,None
+226,84,M,117/106,85,
+227,51,M,107/99,98,Shortness of breath
+228,59,F,140/96,55,Headache;Shortness of breath
+229,69,M,125/93,108,Cough;Headache;Dizziness
+230,73,F,158/104,55,Cough;Headache
+231,50,F,152/81,70,Shortness of breath;None;Cough
+232,87,F,169/107,53,Fever
+233,79,M,161/89,80,None
+234,41,M,154/68,104,Headache;Fatigue;Fever
+235,20,M,130/99,86,Headache;Cough;Fatigue
+236,53,F,123/90,55,None
+237,83,F,174/63,64,None
+238,23,F,150/61,64,Fatigue;Fever
+239,25,F,125/104,93,Fever;None;Dizziness
+240,22,M,169/85,103,
+241,85,F,118/79,82,Cough;None;Dizziness
+242,37,F,111/106,50,Dizziness;Cough;Fever
+243,31,M,163/97,86,Fatigue;Headache;Cough
+244,28,M,176/102,52,
+245,50,F,105/109,105,None
+246,27,M,104/82,59,Cough
+247,61,F,101/72,89,None
+248,19,M,164/96,58,Shortness of breath;Cough;Headache
+249,34,M,108/70,64,None
+250,41,F,137/94,79,None
+251,66,M,168/103,99,Fatigue;Cough;Headache
+252,26,M,133/71,84,
+253,52,F,100/99,71,None;Headache;Fever
+254,77,F,163/88,57,Dizziness;None;Fatigue
+255,28,F,113/89,84,None
+256,54,M,104/78,108,Headache
+257,43,M,161/63,74,Dizziness;Shortness of breath;Fatigue
+258,59,M,117/99,57,
+259,56,M,113/91,100,
+260,55,F,122/74,82,Dizziness;None;Fatigue
+261,42,M,116/92,96,
+262,83,F,177/99,89,None
+263,68,F,138/65,55,Fatigue
+264,84,M,106/67,91,
+265,81,M,114/106,78,None
+266,50,F,126/95,78,None
+267,55,F,156/92,86,None
+268,44,F,154/92,53,
+269,83,F,109/64,108,None
+270,55,F,112/90,96,Shortness of breath
+271,69,M,155/74,78,
+272,25,F,104/88,96,Headache
+273,85,F,175/104,51,None;Dizziness;Fever
+274,44,F,135/95,75,None
+275,60,M,126/64,69,Shortness of breath;Cough;Dizziness
+276,28,F,173/99,87,None
+277,23,F,171/82,96,Headache;Cough;Dizziness
+278,63,F,111/85,62,
+279,79,M,159/102,61,
+280,85,F,104/96,57,Dizziness;Fatigue;Fever
+281,48,F,108/88,63,Shortness of breath;Headache;Fever
+282,57,M,140/81,60,None
+283,40,M,100/105,86,
+284,38,F,135/82,106,
+285,18,M,162/99,64,
+286,38,M,146/68,102,
+287,26,F,173/85,90,Headache;Dizziness
+288,52,M,162/84,75,
+289,55,M,101/66,67,Fever;Fatigue
+290,51,F,116/102,108,Dizziness;Fatigue
+291,68,M,153/83,74,Shortness of breath;Dizziness
+292,88,F,151/65,102,Shortness of breath;Headache;None
+293,50,M,148/88,92,Dizziness
+294,39,M,125/87,99,Headache;Cough;Fatigue
+295,66,F,170/76,69,None
+296,66,F,119/81,77,Fever;Cough
+297,80,M,160/99,98,Headache;None
+298,88,F,100/91,62,Fever
+299,68,M,155/78,81,Fatigue
+300,47,M,128/108,94,Headache
+301,47,M,115/99,68,None
+302,35,F,100/73,100,Shortness of breath
+303,64,F,165/87,98,Headache;Shortness of breath;Cough
+304,55,F,150/63,50,None
+305,25,F,128/98,52,Headache
+306,49,F,109/69,68,Fever;Dizziness
+307,51,M,154/87,81,Fatigue
+308,67,M,106/88,57,
+309,82,F,156/62,73,None
+310,76,M,171/106,86,None
+311,84,M,150/92,77,None
+312,25,F,133/94,81,None
+313,49,F,145/102,65,Fever;Headache
+314,85,F,136/80,63,
+315,72,M,147/77,56,None
+316,24,F,132/82,70,Fever;Fatigue
+317,36,F,118/95,78,Fever;Dizziness
+318,77,F,101/60,96,Fever;Dizziness
+319,86,M,119/70,91,None
+320,19,M,166/82,104,Shortness of breath;None
+321,29,M,119/64,86,None
+322,55,M,108/93,102,Dizziness;None;Cough
+323,61,F,123/76,59,None
+324,47,F,158/105,72,None
+325,31,F,108/99,51,None
+326,42,M,172/81,92,Cough
+327,21,M,125/88,94,Fatigue
+328,54,M,174/65,67,Fatigue
+329,59,F,140/97,83,Headache;Shortness of breath;Fever
+330,34,F,136/84,87,None
+331,44,M,156/90,55,None
+332,57,F,111/104,106,Fatigue;Headache;Shortness of breath
+333,70,F,170/69,94,Shortness of breath;Headache;None
+334,34,F,125/80,77,Shortness of breath;Fatigue;Fever
+335,79,M,145/61,109,
+336,71,M,164/95,100,None
+337,43,F,128/80,60,Dizziness
+338,57,F,110/95,98,None;Fatigue
+339,76,F,138/99,84,None
+340,71,F,154/106,73,Shortness of breath;None;Dizziness
+341,39,F,168/92,107,Dizziness
+342,53,M,119/78,84,None;Fatigue;Dizziness
+343,79,F,172/85,51,Cough
+344,57,M,116/60,74,None
+345,78,M,142/99,91,
+346,42,F,138/94,52,None
+347,61,M,150/89,87,Cough;Dizziness;Shortness of breath
+348,29,F,118/96,93,Cough;Fatigue;None
+349,76,M,148/76,59,
+350,74,F,154/108,96,Cough
+351,29,M,161/75,73,None;Fever
+352,25,M,120/76,72,
+353,87,F,171/84,67,None
+354,29,M,114/85,90,
+355,43,F,146/91,59,Headache
+356,33,M,170/76,72,
+357,43,F,106/73,64,None;Fatigue
+358,24,M,108/107,57,
+359,76,F,138/94,67,Dizziness;Shortness of breath
+360,76,F,116/73,80,Fatigue
+361,41,M,159/104,83,Fatigue;Cough
+362,20,F,136/102,89,Cough
+363,72,F,138/74,105,None;Shortness of breath
+364,21,F,124/72,67,Headache;Fatigue;None
+365,50,F,115/104,91,Fatigue;Dizziness;None
+366,83,F,154/94,91,Cough;Dizziness
+367,51,F,129/72,62,None
+368,35,M,131/91,84,Cough;Fever;Headache
+369,56,M,145/88,98,Dizziness;Shortness of breath;Fever
+370,79,M,156/75,105,Shortness of breath
+371,27,M,129/84,88,None
+372,22,M,164/89,98,Headache;Fever;Cough
+373,20,F,144/73,105,None
+374,47,F,167/77,86,Shortness of breath;Fever;Headache
+375,42,F,147/60,102,Fatigue;Cough
+376,32,F,148/83,53,Fatigue
+377,29,M,158/96,86,Dizziness;Cough;Shortness of breath
+378,60,F,169/98,105,Dizziness;Cough
+379,80,F,145/83,60,Shortness of breath;None;Cough
+380,79,M,176/93,74,Cough;Fatigue;Dizziness
+381,88,F,151/63,108,Dizziness;Headache;None
+382,89,M,119/88,103,Fatigue;None;Fever
+383,74,M,140/108,107,
+384,20,M,105/64,54,None;Headache;Fatigue
+385,71,F,146/82,98,None
+386,26,F,119/108,108,None;Cough
+387,52,F,149/77,66,
+388,20,M,131/94,87,None
+389,30,M,172/63,63,Headache;Cough
+390,28,F,155/62,108,Dizziness;Fatigue
+391,46,M,108/62,74,None
+392,59,F,108/74,89,Cough
+393,42,M,104/70,108,None
+394,55,F,171/64,97,Cough;Dizziness;Shortness of breath
+395,35,M,169/96,109,Fatigue
+396,65,F,176/87,54,
+397,57,F,144/91,78,None
+398,75,M,166/99,83,Fever;Shortness of breath;None
+399,57,M,176/104,82,Shortness of breath
+400,23,F,118/75,89,Headache
+401,76,F,158/107,90,Fever;None;Cough
+402,30,M,144/84,102,None;Fatigue;Cough
+403,59,F,162/86,87,Headache;Fatigue;None
+404,77,F,106/64,92,Fever;Shortness of breath;Fatigue
+405,62,F,157/90,72,Fatigue;Cough;None
+406,59,M,109/91,92,Fever;Fatigue;None
+407,70,F,129/98,80,Fever;Headache;Shortness of breath
+408,19,M,177/72,78,None
+409,29,F,138/61,81,Dizziness;Fever
+410,30,M,145/86,98,Shortness of breath;Dizziness;Fatigue
+411,34,M,159/83,94,
+412,52,F,169/78,79,Fatigue
+413,88,F,173/100,81,Fatigue
+414,80,F,127/74,79,Fatigue;Dizziness
+415,54,M,121/63,69,None
+416,85,F,163/76,61,Fever;Cough;Headache
+417,39,F,116/69,103,None
+418,82,M,121/85,105,None
+419,67,M,113/106,78,Shortness of breath;None;Fatigue
+420,53,F,151/71,56,Dizziness;Fever
+421,46,M,110/92,55,None
+422,49,F,150/70,107,Headache;Shortness of breath;Fever
+423,43,M,145/93,78,
+424,21,F,112/100,88,
+425,32,M,128/88,60,Shortness of breath;Headache;None
+426,49,F,101/106,63,None
+427,39,M,174/86,52,
+428,73,M,120/106,65,Shortness of breath;Dizziness
+429,76,F,105/78,106,Cough;None
+430,86,M,102/60,107,Dizziness
+431,55,F,114/93,84,Fever;Shortness of breath
+432,81,F,124/83,61,
+433,35,M,114/103,65,
+434,44,F,171/105,74,
+435,34,M,152/67,64,Cough;None;Shortness of breath
+436,44,F,145/109,101,Fever
+437,88,F,102/88,93,
+438,70,M,123/62,69,Shortness of breath;Headache;Dizziness
+439,63,M,114/84,79,None;Shortness of breath;Cough
+440,88,M,116/103,69,
+441,26,M,137/107,106,Cough
+442,77,M,162/81,103,
+443,19,M,171/70,62,Fever;Fatigue;Cough
+444,89,F,120/77,79,Dizziness;Cough;Fever
+445,81,M,137/91,60,None
+446,62,M,132/97,90,
+447,25,M,110/81,100,None
+448,58,M,116/71,106,Cough
+449,63,F,131/74,65,
+450,71,F,119/92,59,Headache
+451,57,M,131/109,109,Shortness of breath
+452,19,F,132/100,62,None
+453,47,F,132/72,101,Cough;None
+454,43,F,121/98,51,None
+455,55,M,145/109,64,Fever
+456,61,M,148/99,60,Shortness of breath;Dizziness
+457,78,F,166/65,58,
+458,23,F,172/98,80,Headache;Dizziness;Shortness of breath
+459,49,F,140/109,61,Cough;Shortness of breath
+460,25,F,171/109,77,Fatigue;None
+461,79,F,161/106,108,Cough;Fatigue
+462,24,M,174/79,65,
+463,21,F,105/81,75,Shortness of breath;None
+464,20,F,140/101,63,None;Fever;Headache
+465,29,M,111/72,74,
+466,62,M,118/105,85,
+467,62,M,107/88,104,None
+468,70,M,154/91,100,
+469,61,F,169/77,68,Shortness of breath;Cough
+470,39,M,136/91,105,
+471,76,M,102/87,59,Cough
+472,52,F,160/88,103,Shortness of breath
+473,80,M,178/92,56,
+474,66,F,130/83,69,Headache
+475,54,F,103/87,93,None
+476,37,F,159/83,99,
+477,66,F,150/91,90,None;Fatigue;Shortness of breath
+478,53,M,165/74,83,None
+479,53,F,105/98,91,None
+480,75,F,111/62,94,Cough;None;Headache
+481,35,M,139/80,64,Headache
+482,43,M,107/95,97,Dizziness;Cough
+483,59,F,143/73,63,Fever;None
+484,19,M,136/64,87,Cough
+485,58,M,161/106,63,Headache;Cough;Dizziness
+486,19,M,169/76,108,Cough
+487,45,M,165/94,86,None
+488,22,F,164/99,61,
+489,73,F,135/104,72,Cough;None
+490,64,F,130/70,59,None
+491,84,M,113/75,59,Headache;Shortness of breath
+492,27,F,175/89,90,Headache;Fever
+493,18,F,104/79,57,Cough;Dizziness
+494,60,M,175/60,106,
+495,81,F,127/102,86,
+496,64,F,175/96,98,Fever;Headache;Fatigue
+497,61,F,155/87,96,Headache;Dizziness
+498,23,F,160/79,99,
+499,19,M,172/96,69,
+500,43,M,128/60,104,None
