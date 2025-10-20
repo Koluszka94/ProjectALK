@@ -5,6 +5,9 @@ import numpy as np
 import logging
 
 
+logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
+
+
 # ==========================
 # ===== LOADING / CLEANING =====
 # ==========================
@@ -52,3 +55,8 @@ def load_sqlite(db_path: str, table: str) -> pd.DataFrame:
     else:
         df["Symptoms"] = normalize_symptoms(df["Symptoms"])
     return df
+
+
+#Tomorrow
+
+
