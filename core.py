@@ -57,6 +57,25 @@ def load_sqlite(db_path: str, table: str) -> pd.DataFrame:
     return df
 
 
-#Tomorrow
+def add_bp_numbers(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Rozbija 'BloodPressure' na numeryczne Systolic/Diastolic
+    i wstawia je po kolumnie 'BloodPressure'.
+    """
+    if "BloodPressure" not in df.columns:
+        logging.warning("Missing 'BloodPressure' column. Skipping BP split.")
+        return df
+
+    bp = df["BloodPressure"].astype("string").str.split("/", n=1, expand=True)
+    df["Systolic"] = pd.to_numeric(bp[0], errors="coerce")
+    df["Diastolic"] = pd.to_numeric(bp[1], errors="coerce")
+
+    cols = [c for c in df.columns if c not in ("Systolic", "Diastolic")]
+    insert_at = cols.index("BloodPressure") + 1 if "BloodPressure" in cols else len(cols)
+    cols[insert_at:insert_at] = ["Systolic", "Diastolic"]
+    return df.loc[:, cols]
+
+
+#Tomorrow filtering and stats?
 
 
