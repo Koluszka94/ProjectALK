@@ -76,6 +76,45 @@ def add_bp_numbers(df: pd.DataFrame) -> pd.DataFrame:
     return df.loc[:, cols]
 
 
-#Tomorrow filtering and stats?
+# ==========================
+# ===== FILTERING =====
+# ==========================
+def filter_patients(
+    df: pd.DataFrame,
+    *,
+    age_min=None, age_max=None,
+    gender=None,
+    systolic_min=None, systolic_max=None,
+    diastolic_min=None, diastolic_max=None,
+    hr_min=None, hr_max=None,
+    only_missing_symptom=None  # True -> bez, False -> z symptomami, None -> brak filtra
+) -> pd.DataFrame:
+    """Filtruje pacjentów wg zadanych parametrów."""
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df must be a pandas DataFrame")
 
+    m = pd.Series(True, index=df.index)
+
+    def apply_range(col, min_val, max_val):
+        nonlocal m
+        if col in df.columns:
+            if min_val is not None:
+                m &= df[col] >= min_val
+            if max_val is not None:
+                m &= df[col] <= max_val
+
+    apply_range("Age", age_min, age_max)
+    apply_range("Systolic", systolic_min, systolic_max)
+    apply_range("Diastolic", diastolic_min, diastolic_max)
+    apply_range("HeartRate", hr_min, hr_max)
+
+    if gender is not None and "Gender" in df.columns:
+        m &= df["Gender"].astype("string").str.upper() == str(gender).upper()
+
+    if only_missing_symptom is True:
+        m &= df["Symptoms"].isna()
+    elif only_missing_symptom is False:
+        m &= df["Symptoms"].notna()
+
+    return df.loc[m].copy()
 
