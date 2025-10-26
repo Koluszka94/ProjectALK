@@ -87,7 +87,7 @@ def filter_patients(
     systolic_min=None, systolic_max=None,
     diastolic_min=None, diastolic_max=None,
     hr_min=None, hr_max=None,
-    only_missing_symptom=None  # True -> bez, False -> z symptomami, None -> brak filtra
+    only_missing_symptom=None  
 ) -> pd.DataFrame:
     """Filtruje pacjentów wg zadanych parametrów."""
     if not isinstance(df, pd.DataFrame):
@@ -118,3 +118,63 @@ def filter_patients(
 
     return df.loc[m].copy()
 
+# ==========================
+# ====== STATS ======
+# ==========================
+def basic_summary(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Podstawowe statystyki opisowe:
+    count, mean, median, std, min, q1, q3, max
+    """
+    cols = [c for c in NUM_COLS if c in df.columns]
+    d = {
+        "count": df[cols].count(),
+        "mean": df[cols].mean(numeric_only=True),
+        "median": df[cols].median(numeric_only=True),
+        "std": df[cols].std(numeric_only=True),
+        "min": df[cols].min(numeric_only=True),
+        "q1": df[cols].quantile(0.25, numeric_only=True),
+        "q3": df[cols].quantile(0.75, numeric_only=True),
+        "max": df[cols].max(numeric_only=True),
+    }
+    out = pd.DataFrame(d).T
+    return out[cols].T
+
+
+def add_age_groups(df: pd.DataFrame) -> pd.DataFrame:
+    """Dodaje kolumnę AgeGroup z przedziałami wiekowymi."""
+    if "Age" not in df.columns:
+        return df
+    bins = [0, 30, 50, 120]
+    labels = ["<30", "30-50", "50+"]
+    df["AgeGroup"] = pd.cut(df["Age"], bins=bins, labels=labels, right=False)
+    return df
+
+
+def group_summary(df: pd.DataFrame, by: str) -> pd.DataFrame:
+    """
+    Uniwersalna funkcja grupująca:
+    statystyki count/mean/median/min/max dla NUM_COLS w podziale po by.
+    """
+    cols = [c for c in NUM_COLS if c in df.columns]
+    g = df.groupby(by, dropna=False)[cols].agg(["count", "mean", "median", "min", "max"])
+    g.columns = ["_".join(col).strip() for col in g.columns.values]
+    return g
+
+
+def group_by_gender(df: pd.DataFrame) -> pd.DataFrame:
+    return group_summary(df, "Gender")
+
+
+def group_by_age(df: pd.DataFrame) -> pd.DataFrame:
+    if "AgeGroup" not in df.columns:
+        df = add_age_groups(df)
+    return group_summary(df, "AgeGroup")
+
+
+def compare_symptoms(df: pd.DataFrame) -> pd.DataFrame:
+    if "Symptoms" not in df.columns:
+        logging.warning("Column 'Symptoms' not found.")
+        return pd.DataFrame()
+    df = df.assign(SymptomStatus=df["Symptoms"].notna().map({True: "With symptoms", False: "Without symptoms"}))
+    return group_summary(df, "SymptomStatus")
