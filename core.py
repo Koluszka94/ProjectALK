@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import logging
 
-
+NUM_COLS = ["HeartRate", "Systolic", "Diastolic"]
 logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 
 
