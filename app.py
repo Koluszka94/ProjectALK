@@ -184,3 +184,106 @@ class MainWindow(QMainWindow):
             QPushButton:disabled, QToolButton:disabled { background: #9DBDFF; }
         """)
         return w
+# Zakładka "Data"
+# Pozwala wczytać plik CSV lub bazę SQLite z danymi pacjentów
+# i wyświetla zawartość w tabeli
+    def _build_tab_data(self):
+        v = QVBoxLayout(self.tab_data)
+        v.setContentsMargins(16, 16, 16, 16)
+        v.setSpacing(10)
+
+        row = QHBoxLayout()
+        row.setSpacing(8)
+
+        self.le_path = QLineEdit()
+        self.le_path.setPlaceholderText("Wybierz plik CSV lub SQLite…")
+        self.le_path.setMinimumHeight(FIELD_H)
+
+        btn_browse = self._style_button(QToolButton(self)); btn_browse.setText("Browse…")
+        btn_browse.clicked.connect(self.on_browse_any)
+
+        btn_load = self._style_button(QPushButton("Load data"))
+        btn_load.clicked.connect(self.on_load_any)
+
+        row.addStretch(1)
+        row.addWidget(self.le_path)
+        row.addWidget(btn_browse)
+        row.addWidget(btn_load)
+        row.addStretch(1)
+        v.addLayout(row)
+
+        # Tabela danych
+        self.table = QTableView()
+        self.model = PandasModel()
+        self.table.setModel(self.model)
+        v.addWidget(self.table)
+
+# Zakładka "Filters"
+# Umożliwia filtrowanie pacjentów po wieku, płci, ciśnieniu, HR i objawach
+    def _build_tab_filters(self):
+        outer = QVBoxLayout(self.tab_filters)
+        outer.setContentsMargins(16, 16, 16, 16)
+        outer.setSpacing(12)
+
+        form_widget = QWidget()
+        form_widget.setMaximumWidth(FORM_MAX_W)
+        form = QFormLayout(form_widget)
+        form.setLabelAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        form.setFormAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
+        form.setHorizontalSpacing(16)
+        form.setVerticalSpacing(10)
+
+        # Age
+        self.le_age_min = QLineEdit(); self.le_age_min.setPlaceholderText("min")
+        self.le_age_max = QLineEdit(); self.le_age_max.setPlaceholderText("max")
+        self._set_pair_sizes(self.le_age_min, self.le_age_max)
+        form.addRow("Age", self._h(self.le_age_min, self.le_age_max))
+
+        # Gender (All/Female/Male)
+        self.cb_gender = QComboBox()
+        self.cb_gender.addItems(["All patients", "Female", "Male"])
+        self._set_field_size(self.cb_gender)
+        form.addRow("Gender", self.cb_gender)
+
+        # Systolic
+        self.le_sys_min = QLineEdit(); self.le_sys_min.setPlaceholderText("min")
+        self.le_sys_max = QLineEdit(); self.le_sys_max.setPlaceholderText("max")
+        self._set_pair_sizes(self.le_sys_min, self.le_sys_max)
+        form.addRow("Systolic", self._h(self.le_sys_min, self.le_sys_max))
+
+        # Diastolic
+        self.le_dia_min = QLineEdit(); self.le_dia_min.setPlaceholderText("min")
+        self.le_dia_max = QLineEdit(); self.le_dia_max.setPlaceholderText("max")
+        self._set_pair_sizes(self.le_dia_min, self.le_dia_max)
+        form.addRow("Diastolic", self._h(self.le_dia_min, self.le_dia_max))
+
+        # Heart Rate
+        self.le_hr_min = QLineEdit(); self.le_hr_min.setPlaceholderText("min")
+        self.le_hr_max = QLineEdit(); self.le_hr_max.setPlaceholderText("max")
+        self._set_pair_sizes(self.le_hr_min, self.le_hr_max)
+        form.addRow("Heart Rate", self._h(self.le_hr_min, self.le_hr_max))
+
+        # Symptoms
+        self.cb_symptoms = QComboBox()
+        self.cb_symptoms.addItems(["All patients", "With symptoms", "Without symptoms"])
+        self._set_field_size(self.cb_symptoms)
+        form.addRow("Symptoms", self.cb_symptoms)
+
+        # Przyciski pod panelem filtrów
+        btn_apply = self._style_button(QPushButton("Apply filters"))
+        btn_apply.clicked.connect(self.apply_filter)
+        btn_reset = self._style_button(QPushButton("Reset filters"))
+        btn_reset.clicked.connect(self.reset_filters)
+
+        btns_line = QHBoxLayout()
+        btns_line.setContentsMargins(0, 0, 0, 0)
+        btns_line.setSpacing(12)
+        btns_line.addWidget(btn_apply)
+        btns_line.addWidget(btn_reset)
+        btns_line.addStretch(1)
+        btns_widget = QWidget(); btns_widget.setLayout(btns_line)
+
+        form.addRow("", btns_widget)
+
+        outer.addWidget(self._centered_container(form_widget), alignment=Qt.AlignmentFlag.AlignHCenter)
+        outer.addStretch(1)
