@@ -40,7 +40,7 @@ HALF_W    = 115
 BUTTON_W  = 110
 BUTTON_H  = 28
 FORM_MAX_W = 560
-LOG_MAX_H = 80 
+LOG_MAX_H = 80
 
 
 # Adapter DataFrame -> QTableView
@@ -89,7 +89,7 @@ class PlotCanvas(FigureCanvas):
 
 
 # ======================
-# Główne okno aplikacji 
+# Główne okno aplikacji
 # ======================
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -119,7 +119,7 @@ class MainWindow(QMainWindow):
         self.tab_export = QWidget(); tabs.addTab(self.tab_export, "Export")
         self._build_tab_export()
 
-        # ----------- Logi -----------
+        # ----------- Logi (mniejsze) -----------
         self.log = QPlainTextEdit()
         self.log.setReadOnly(True)
         self.log.setMaximumHeight(LOG_MAX_H)
@@ -169,24 +169,33 @@ class MainWindow(QMainWindow):
 
     # ---------- Jednolity styl przycisków ----------
     def _style_button(self, w):
+        # Wymuś ten sam font i rozmiar w pt (stabilny na macOS/Retina)
+        app_font = QGuiApplication.font()
+        size_pt = app_font.pointSize()
+        if size_pt <= 0:
+            size_pt = 12  # fallback, gdyby pointSize był -1
+        w.setFont(app_font)
+
         w.setFixedSize(BUTTON_W, BUTTON_H)
-        w.setStyleSheet("""
-            QPushButton, QToolButton {
+        w.setStyleSheet(f"""
+            QPushButton, QToolButton {{
                 background: #2D7DFF;
                 color: #FFFFFF;
                 font-weight: 600;
+                font-size: {size_pt}pt;
                 border: 0;
                 border-radius: 6px;
                 padding: 6px 12px;
-            }
-            QPushButton:hover, QToolButton:hover { background: #2468D6; }
-            QPushButton:pressed, QToolButton:pressed { background: #1F5ABD; }
-            QPushButton:disabled, QToolButton:disabled { background: #9DBDFF; }
+            }}
+            QPushButton:hover, QToolButton:hover {{ background: #2468D6; }}
+            QPushButton:pressed, QToolButton:pressed {{ background: #1F5ABD; }}
+            QPushButton:disabled, QToolButton:disabled {{ background: #9DBDFF; }}
         """)
         return w
-# Zakładka "Data"
-# Pozwala wczytać plik CSV lub bazę SQLite z danymi pacjentów
-# i wyświetla zawartość w tabeli
+
+    # Zakładka "Data"
+    # Pozwala wczytać plik CSV lub bazę SQLite z danymi pacjentów
+    # i wyświetla zawartość w tabeli
     def _build_tab_data(self):
         v = QVBoxLayout(self.tab_data)
         v.setContentsMargins(16, 16, 16, 16)
@@ -199,7 +208,8 @@ class MainWindow(QMainWindow):
         self.le_path.setPlaceholderText("Wybierz plik CSV lub SQLite…")
         self.le_path.setMinimumHeight(FIELD_H)
 
-        btn_browse = self._style_button(QToolButton(self)); btn_browse.setText("Browse…")
+        # ZAMIANA: Browse… jako QPushButton (zamiast QToolButton)
+        btn_browse = self._style_button(QPushButton("Browse…"))
         btn_browse.clicked.connect(self.on_browse_any)
 
         btn_load = self._style_button(QPushButton("Load data"))
@@ -218,8 +228,8 @@ class MainWindow(QMainWindow):
         self.table.setModel(self.model)
         v.addWidget(self.table)
 
-# Zakładka "Filters"
-# Umożliwia filtrowanie pacjentów po wieku, płci, ciśnieniu, HR i objawach
+    # Zakładka "Filters"
+    # Umożliwia filtrowanie pacjentów po wieku, płci, ciśnieniu, HR i objawach
     def _build_tab_filters(self):
         outer = QVBoxLayout(self.tab_filters)
         outer.setContentsMargins(16, 16, 16, 16)
@@ -288,8 +298,8 @@ class MainWindow(QMainWindow):
         outer.addWidget(self._centered_container(form_widget), alignment=Qt.AlignmentFlag.AlignHCenter)
         outer.addStretch(1)
 
-# Zakładka "Statistics"
-# Pozwala generować tabele z podsumowaniami, grupowaniami i porównaniami
+    # Zakładka "Statistics"
+    # Pozwala generować tabele z podsumowaniami, grupowaniami i porównaniami
     def _build_tab_stats(self):
         v = QVBoxLayout(self.tab_stats)
         v.setContentsMargins(12, 12, 12, 12)
@@ -306,7 +316,7 @@ class MainWindow(QMainWindow):
             line = QHBoxLayout()
             lbl = QLabel(title)
 
-            # Metrics & Statistics 
+            # Metrics & Statistics
             btn_metrics = self._style_button(QToolButton(self)); btn_metrics.setText("Metrics ▾")
             metrics_menu = self._action_menu_metrics(scope_prefix)  # has Select All / Reset
             btn_metrics.setMenu(metrics_menu); btn_metrics.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
@@ -620,7 +630,7 @@ class MainWindow(QMainWindow):
 
         controls = QVBoxLayout(controls_box)
         controls.setSpacing(40)
-        controls.setContentsMargins(8, 8, 8, 😎
+        controls.setContentsMargins(8, 8, 8, 8)
 
         # Segment wyboru typu
         segment_row = QHBoxLayout()
@@ -735,7 +745,6 @@ class MainWindow(QMainWindow):
         hist_form.setVerticalSpacing(6)
         self.cb_hist_metric = QComboBox(); self.cb_hist_metric.addItems(["Age","HeartRate","Systolic","Diastolic"])
         self.sp_hist_bins = QSpinBox(); self.sp_hist_bins.setRange(2, 100); self.sp_hist_bins.setValue(10)
-        # (USUNIĘTO self.chk_age_fixed_bins)
         hist_form.addRow("Metric:", self.cb_hist_metric)
         hist_form.addRow("Bins:", self.sp_hist_bins)
         self.custom_stack.addWidget(hist_page)
@@ -820,3 +829,333 @@ class MainWindow(QMainWindow):
             w.setFixedWidth(input_w)
             if isinstance(w, QComboBox):
                 w.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
+
+    # ====== Obsługa presetów ======
+    def _clear_preset_only_ui(self):
+        self.custom_stack.setVisible(True)
+
+    def _clear_preset(self, which: str):
+        if which == "hist":
+            self.cb_hist_preset.blockSignals(True); self.cb_hist_preset.setCurrentIndex(0); self.cb_hist_preset.blockSignals(False)
+            self._hist_use_decade_bins = False
+        elif which == "scat":
+            self.cb_scat_preset.blockSignals(True); self.cb_scat_preset.setCurrentIndex(0); self.cb_scat_preset.blockSignals(False)
+        elif which == "box":
+            self.cb_box_preset.blockSignals(True); self.cb_box_preset.setCurrentIndex(0); self.cb_box_preset.blockSignals(False)
+        self.custom_stack.setVisible(True)
+
+    def _on_preset_change(self, which: str):
+        if which == "hist":
+            idx = self.cb_hist_preset.currentIndex()
+            if idx <= 0:
+                self._hist_use_decade_bins = False
+                self.custom_stack.setVisible(True)
+                return
+            name = self.cb_hist_preset.currentText()
+            self._apply_hist_preset(name)
+            self.custom_stack.setVisible(False)
+        elif which == "scat":
+            idx = self.cb_scat_preset.currentIndex()
+            if idx <= 0:
+                self.custom_stack.setVisible(True)
+                return
+            name = self.cb_scat_preset.currentText()
+            self._apply_scat_preset(name)
+            self.custom_stack.setVisible(False)
+        elif which == "box":
+            idx = self.cb_box_preset.currentIndex()
+            if idx <= 0:
+                self.custom_stack.setVisible(True)
+                return
+            name = self.cb_box_preset.currentText()
+            self._apply_box_preset(name)
+            self.custom_stack.setVisible(False)
+
+    def _apply_hist_preset(self, name: str):
+        if name == "Age — decades dynamic":
+            self.cb_hist_metric.setCurrentText("Age")
+            self._hist_use_decade_bins = True
+        elif name == "Age — 4 equal-width bins":
+            self.cb_hist_metric.setCurrentText("Age")
+            self.sp_hist_bins.setValue(4)
+            self._hist_use_decade_bins = False
+        elif name == "Systolic — 10 bins":
+            self.cb_hist_metric.setCurrentText("Systolic")
+            self.sp_hist_bins.setValue(10)
+            self._hist_use_decade_bins = False
+        elif name == "Diastolic — 10 bins":
+            self.cb_hist_metric.setCurrentText("Diastolic")
+            self.sp_hist_bins.setValue(10)
+            self._hist_use_decade_bins = False
+        elif name == "HeartRate — 10 bins":
+            self.cb_hist_metric.setCurrentText("HeartRate")
+            self.sp_hist_bins.setValue(10)
+            self._hist_use_decade_bins = False
+
+    def _apply_scat_preset(self, name: str):
+        if name == "Age vs Systolic (color by gender)":
+            self.cb_scatter_x.setCurrentText("Age")
+            self.cb_scatter_y.setCurrentText("Systolic")
+            self.chk_scatter_color_gender.setChecked(True)
+        elif name == "Age vs HeartRate (color by gender)":
+            self.cb_scatter_x.setCurrentText("Age")
+            self.cb_scatter_y.setCurrentText("HeartRate")
+            self.chk_scatter_color_gender.setChecked(True)
+
+    def _apply_box_preset(self, name: str):
+        if name == "Systolic by Gender":
+            self.cb_box_metric.setCurrentText("Systolic")
+            self.chk_box_means.setChecked(True)
+        elif name == "Diastolic by Gender":
+            self.cb_box_metric.setCurrentText("Diastolic")
+            self.chk_box_means.setChecked(True)
+        elif name == "HeartRate by Gender":
+            self.cb_box_metric.setCurrentText("HeartRate")
+            self.chk_box_means.setChecked(True)
+        elif name == "Age by Gender":
+            self.cb_box_metric.setCurrentText("Age")
+            self.chk_box_means.setChecked(True)
+
+    def _current_plot_type(self):
+        return getattr(self, "_plot_choice", "hist")
+
+    def save_current_plot(self):
+        path, _ = QFileDialog.getSaveFileName(self, "Save plot", filter="PNG (*.png)")
+        if not path: return
+        try:
+            self.canvas.figure.savefig(path, bbox_inches="tight", dpi=150)
+            QMessageBox.information(self, "Save plot", f"Saved: {path}")
+            self._log(f"> Plot saved: {path}")
+        except Exception as e:
+            QMessageBox.critical(self, "Save plot", str(e))
+
+    # === Etykiety z jednostkami ===
+    def _metric_label(self, name: str) -> str:
+        units = {
+            "Age": "years",
+            "Systolic": "mmHg",
+            "Diastolic": "mmHg",
+            "HeartRate": "bpm"
+        }
+        u = units.get(name, "")
+        return f"{name} [{u}]" if u else name
+
+    def draw_current_plot(self):
+        if self.df_view is None or self.df_view.empty:
+            QMessageBox.information(self, "Plot", "Brak danych po filtrach."); return
+        pt = self._current_plot_type()
+        if pt == "hist":   self._draw_histogram()
+        elif pt == "scat": self._draw_scatter()
+        elif pt == "box":  self._draw_boxplot_gender()
+        else: QMessageBox.information(self, "Plot", "Nieobsługiwany typ wykresu.")
+
+    def _draw_histogram(self):
+        metric = self.cb_hist_metric.currentText()
+        series = pd.to_numeric(self.df_view[metric], errors="coerce").dropna()
+        if series.empty:
+            QMessageBox.information(self, "Histogram", f"Brak danych w kolumnie {metric}."); return
+        self.canvas.clear(); ax = self.canvas.ax
+        if metric == "Age" and getattr(self, "_hist_use_decade_bins", False):
+            max_age = int(math.ceil(series.max()))
+            top = max(20, int(math.ceil(max_age / 20.0) * 20))
+            bins = list(range(0, top + 1, 20))
+            ax.hist(series, bins=bins, edgecolor="black")
+            ax.set_xticks(bins); ax.set_xlim(bins[0], bins[-1])
+            ax.set_xlabel(self._metric_label("Age")); ax.set_ylabel("Count [patients]"); ax.set_title("Age histogram (decades)")
+        else:
+            bins = int(self.sp_hist_bins.value())
+            ax.hist(series, bins=bins, edgecolor="black")
+            ax.set_xlabel(self._metric_label(metric)); ax.set_ylabel("Count [patients]"); ax.set_title(f"Histogram: {metric} (bins={bins})")
+        ax.grid(True, axis="y", linestyle=":", linewidth=0.8)
+        self.canvas.draw(); self._log(f"> Plot: histogram {metric}")
+
+    def _draw_scatter(self):
+        x = self.cb_scatter_x.currentText(); y = self.cb_scatter_y.currentText()
+        if x == y: QMessageBox.information(self, "Scatter", "Wybierz różne kolumny dla osi X i Y."); return
+        df = self.df_view.copy()
+        df[x] = pd.to_numeric(df[x], errors="coerce"); df[y] = pd.to_numeric(df[y], errors="coerce")
+        df = df.dropna(subset=[x, y])
+        if df.empty: QMessageBox.information(self, "Scatter", "Brak danych do wykresu."); return
+        self.canvas.clear(); ax = self.canvas.ax
+        if self.chk_scatter_color_gender.isChecked() and "Gender" in df.columns:
+            for g, sub in df.groupby("Gender"):
+                ax.scatter(sub[x], sub[y], label=str(g), alpha=0.7)
+            ax.legend(title="Gender")
+        else:
+            ax.scatter(df[x], df[y], alpha=0.7)
+        ax.set_xlabel(self._metric_label(x)); ax.set_ylabel(self._metric_label(y)); ax.set_title(f"{x} vs {y}")
+        ax.grid(True, linestyle=":", linewidth=0.8)
+        self.canvas.draw(); self._log(f"> Plot: scatter {x} vs {y}")
+
+    def _draw_boxplot_gender(self):
+        metric = self.cb_box_metric.currentText()
+        if "Gender" not in self.df_view.columns:
+            QMessageBox.information(self, "Boxplot", "Brak kolumny Gender."); return
+        df = self.df_view.copy()
+        df[metric] = pd.to_numeric(df[metric], errors="coerce")
+        f_vals = df.loc[df["Gender"] == "F", metric].dropna()
+        m_vals = df.loc[df["Gender"] == "M", metric].dropna()
+        if f_vals.empty and m_vals.empty:
+            QMessageBox.information(self, "Boxplot", "Brak danych do wykresu."); return
+        self.canvas.clear(); ax = self.canvas.ax
+        data, labels = [], []
+        if not f_vals.empty: data.append(f_vals.values); labels.append("Female")
+        if not m_vals.empty: data.append(m_vals.values); labels.append("Male")
+        ax.boxplot(data, labels=labels, showmeans=self.chk_box_means.isChecked())
+        ax.set_ylabel(self._metric_label(metric)); ax.set_title(f"{metric} by Gender")
+        ax.grid(True, axis="y", linestyle=":", linewidth=0.8)
+        self.canvas.draw(); self._log(f"> Plot: boxplot {metric} by gender")
+
+    # ---------- Zakładka EXPORT ----------
+    def _build_tab_export(self):
+        v = QVBoxLayout(self.tab_export)
+        v.setContentsMargins(16, 16, 16, 16)
+        v.setSpacing(10)
+
+        info = QLabel("Eksport danych lub raportu PDF.")
+        btn_csv = self._style_button(QPushButton("Export CSV")); btn_csv.clicked.connect(self.export_csv)
+        btn_pdf = self._style_button(QPushButton("Export PDF")); btn_pdf.clicked.connect(self.export_pdf_report)
+
+        row = QHBoxLayout()
+        row.addStretch(1); row.addWidget(btn_csv); row.addWidget(btn_pdf); row.addStretch(1)
+
+        v.addWidget(info, alignment=Qt.AlignmentFlag.AlignHCenter)
+        v.addLayout(row)
+        v.addStretch(1)
+
+    # ---------- Browsing / Loading ----------
+    def on_browse_any(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select data source",
+            filter="CSV (*.csv);;SQLite (*.db *.sqlite *.sqlite3);;All files (*.*)"
+        )
+        if path:
+            self.le_path.setText(path)
+
+    def on_load_any(self):
+        path = self.le_path.text().strip()
+        if not path:
+            QMessageBox.information(self, "Load", "Wybierz plik CSV lub SQLite.")
+            return
+
+        try:
+            lower = path.lower()
+            if lower.endswith(".csv"):
+                self.df = load_data(path)
+            elif lower.endswith(".db") or lower.endswith(".sqlite") or lower.endswith(".sqlite3"):
+                table, ok = QInputDialog.getText(self, "SQLite table", "Table name:")
+                if not ok or not table.strip():
+                    return
+                self.df = load_sqlite(path, table.strip())
+            else:
+                try:
+                    self.df = load_data(path)
+                except Exception:
+                    table, ok = QInputDialog.getText(self, "SQLite table", "Table name:")
+                    if not ok or not table.strip():
+                        return
+                    self.df = load_sqlite(path, table.strip())
+
+            self.df = add_bp_numbers(self.df)
+            self.df_view = self.df.copy()
+            self.model.set_df(self.df_view)
+            QMessageBox.information(self, "Loaded", f"Rows: {len(self.df)}")
+            self._log(f"> Data loaded: {os.path.basename(path)} (rows: {len(self.df)})")
+
+        except Exception as e:
+            QMessageBox.critical(self, "Load error", str(e))
+            self._log(f"! Load error: {e}")
+
+    # ---------- Filters ----------
+    def apply_filter(self):
+        if self.df is None:
+            return
+
+        gender_ui = self.cb_gender.currentText()
+        if gender_ui == "All patients":
+            gender = None
+        elif gender_ui == "Female":
+            gender = "F"
+        else:
+            gender = "M"
+
+        sym_sel = self.cb_symptoms.currentText()
+        if sym_sel == "All patients":
+            only_missing = None
+        elif sym_sel == "With symptoms":
+            only_missing = False
+        else:
+            only_missing = True
+
+        self.df_view = filter_patients(
+            self.df,
+            age_min=self._get_int(self.le_age_min),
+            age_max=self._get_int(self.le_age_max),
+            gender=gender,
+            systolic_min=self._get_int(self.le_sys_min),
+            systolic_max=self._get_int(self.le_sys_max),
+            diastolic_min=self._get_int(self.le_dia_min),
+            diastolic_max=self._get_int(self.le_dia_max),
+            hr_min=self._get_int(self.le_hr_min),
+            hr_max=self._get_int(self.le_hr_max),
+            only_missing_symptom=only_missing,
+        )
+        self.model.set_df(self.df_view)
+        self._log("> Filters applied.")
+
+    def reset_filters(self):
+        if self.df is None:
+            return
+        for le in [
+            self.le_age_min, self.le_age_max,
+            self.le_sys_min, self.le_sys_max,
+            self.le_dia_min, self.le_dia_max,
+            self.le_hr_min, self.le_hr_max,
+        ]:
+            le.clear()
+        self.cb_gender.setCurrentText("All patients")
+        self.cb_symptoms.setCurrentText("All patients")
+        self.df_view = self.df.copy()
+        self.model.set_df(self.df_view)
+        self._log("> Filters reset.")
+
+    # ---------- Export ----------
+    def export_csv(self):
+        if self.df_view is None or self.df_view.empty:
+            QMessageBox.warning(self, "Export", "Brak danych.")
+            return
+        path, _ = QFileDialog.getSaveFileName(self, "Save CSV", filter="CSV (*.csv)")
+        if not path:
+            return
+        self.df_view.to_csv(path, index=False)
+        QMessageBox.information(self, "Export", f"Zapisano: {path}")
+        self._log(f"> Exported CSV: {path}")
+
+    def export_pdf_report(self):
+        if self.df_view is None or self.df_view.empty:
+            QMessageBox.warning(self, "Export", "Brak danych.")
+            return
+        path, _ = QFileDialog.getSaveFileName(self, "Save PDF", filter="PDF (*.pdf)")
+        if not path:
+            return
+        with PdfPages(path) as pdf:
+            fig = Figure(figsize=(8.27, 11.69))  # A4
+            ax = fig.add_subplot(111); ax.axis("off")
+            lines = [f"Patient summary (rows: {len(self.df_view)})", ""]
+            bs = basic_summary(self.df_view)
+            lines += bs.round(2).to_string().splitlines()
+            ax.text(0.02, 0.98, "\n".join(lines), va="top", family="monospace")
+            pdf.savefig(fig); fig.clear()
+        QMessageBox.information(self, "Export", f"PDF saved: {path}")
+        self._log(f"> Exported PDF: {path}")
+
+
+def main():
+    app = QApplication(sys.argv)
+    w = MainWindow()
+    w.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
